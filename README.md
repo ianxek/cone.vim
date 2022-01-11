@@ -2,7 +2,7 @@
 Syntax highlighting for [Jonathan Goodwin's](https://jondgoodwin.com/) programming language, [Cone](https://cone.jondgoodwin.com/).
 Derived from [tetralux' odin.vim](https://github.com/Tetralux/odin.vim)
 
-### What it looks likein Iterm on Mac with Vim's colorscheme desert256
+### What it looks like in Iterm on Mac with Vim's colorscheme desert256
 ![Screenshot](cone.vim.png)
 
 ### A tip to refresh the syntax highlightig
