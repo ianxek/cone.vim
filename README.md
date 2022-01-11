@@ -5,6 +5,10 @@ Derived from [tetralux' odin.vim](https://github.com/Tetralux/odin.vim)
 ### What it looks like. (in Iterm on Mac with Vim's colorscheme desert256)
 ![Screenshot](cone.vim.png)
 
+### A tip to refresh the syntax highlightig
+Remember that sometimes, like when pasting many lines of code in between block comment marked by `\*` and `*\`, the highlighting
+might need a little refreshing : in that case use vim's `:redraw` which shortcut is `Ctrl-L`.
+
 ### Installation
 
 Simply clone the repository into your Vim's package directory. (Vim must be installed from https://www.vim.org.)
