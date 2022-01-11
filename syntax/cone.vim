@@ -14,6 +14,8 @@ syntax match coneHack "HACK"
 syntax keyword coneDataType i8 i16 i32 i64 isize u8 u16 u32 u64 usize f32 f64 dec64 Option Result Bool void Self
 " syntax keyword coneDataTypeC contained i8 i16 i32 i64 isize u8 u16 u32 u64 usize f32 f64 dec64 Option Result Bool void
 
+syntax keyword coneTrust trust
+
 syntax keyword conePerm uni mut imm const opaq
 syntax keyword coneBool true false
 syntax keyword coneNull nil
@@ -259,6 +261,7 @@ highlight link coneTagNote Identifier
 highlight link coneTypeSuffix Type
 highlight link coneDataType Type
 highlight link conePerm WarningMsg
+highlight link coneTrust WarningMsg
 
 " highlight link coneDataTypeC Type
 highlight link coneBool Boolean
