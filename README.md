@@ -6,7 +6,7 @@ Derived from [tetralux' odin.vim](https://github.com/Tetralux/odin.vim)
 ![Screenshot](cone.vim.png)
 
 ### A tip to refresh the syntax highlightig
-Remember that sometimes, like when pasting many lines of code in between block comment marked by `\*` and `*\`, the highlighting
+Remember that sometimes, like when pasting many lines of code in between block comment marked by `/*` and `*/`, the highlighting
 might need a little refreshing : in that case use vim's `:redraw` which shortcut is `Ctrl-L`.
 
 ### Installation
