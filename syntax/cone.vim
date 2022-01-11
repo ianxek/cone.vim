@@ -23,8 +23,17 @@ syntax keyword coneVoid void
 
 syntax match backTick "`"
 
+syntax match coneLibs "\(\<\(include\|import\)\>\s*\)\@<=\(\"\?\)\zs\<\S\{-}\>\ze\3\s*::"
+syntax match coneAlias "\(\<as\>\s*\)\@<=\zs\<\S\{-}\>\ze"
+
+" This matches all the names imported from a module if any
+" in combination with "contains", "matchgroup" allows to exclude the pattern notConeName
+" so that ::, commas, and "as" are not highlighted
+syntax match notConeName "\(,\|::\|as\)" contained
+syntax region coneName matchgroup=notConeNameLit start="\(::\)\@<=" end="as" contains=notConeName
+
 syntax region coneChar start=/\v'/ skip=/\v\\./ end=/\v'/
-syntax region coneString start=/\v"/ skip=/\v\\./ end=/\v"/
+syntax region coneString start=/\v"/ skip=/\v\\./ end=/\v"/ contains=coneLibs
 syntax region coneRString start=/\vr"/ skip=/\v\\./ end=/\v"/
 syntax region coneRawString start=/\vr`/ skip=/\v\\./ end=/\v`/
 syntax region cone3String start=/\v"""/ skip=/\v\\./ end=/\v"""/
@@ -67,7 +76,6 @@ syntax match coneTagNote "@\<\w\+\>" display
 
 syntax match coneLifetime "'\<\w\+\>" display
 
-syntax match coneConstant "\v<[A-Z0-9,_]+>" display
 syntax match coneRange "\.\.\." display
 syntax match coneHalfRange "\.\." display
 syntax match coneTernaryQMark "?" display
@@ -113,6 +121,8 @@ syntax match coneHex "\<0[xX][0-9A-Fa-f]\+\>" display
 syntax match coneDoz "\<0[zZ][0-9a-bA-B]\+\>" display
 syntax match coneOct "\<0[oO][0-7]\+\>" display
 syntax match coneBin "\<0[bB][01]\+\>" display
+
+syntax match coneConstant "\v<[A-Z0-9,_]+>" display
 
 syntax match coneAddressOf "&" display
 syntax match coneDeref "\*" display
@@ -169,8 +179,6 @@ syntax keyword conefalse false
 
 highlight link coneSelf Struct
 
-highlight link coneFold SpecialKey
-
 highlight link coneInclude Keyword
 highlight link coneImport Keyword
 highlight link coneExtern Keyword
@@ -219,6 +227,13 @@ highlight link coneRString String
 highlight link coneRawString String
 highlight link cone3String String
 highlight link coneR3String String
+
+highlight link coneLibs Directory
+highlight link coneAlias Directory
+highlight link coneName Directory
+highlight link coneNameLit Normal
+highlight link notConeName Normal
+highlight link coneFold SpecialKey
 
 highlight link coneLogical Operator
 highlight link coneOperator Operator
