@@ -122,7 +122,7 @@ syntax match coneDoz "\<0[zZ][0-9a-bA-B]\+\>" display
 syntax match coneOct "\<0[oO][0-7]\+\>" display
 syntax match coneBin "\<0[bB][01]\+\>" display
 
-syntax match coneConstant "\v<[A-Z0-9,_]+>" display
+syntax match coneConstant "\v<[A-Z0-9,_]+" display
 
 syntax match coneAddressOf "&" display
 syntax match coneDeref "\*" display
