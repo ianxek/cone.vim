@@ -11,7 +11,7 @@ syntax match coneHack "HACK"
 
 " If this changes, change accordingly in :
 " syntax match coneTypeSuffix (see below)
-syntax keyword coneDataType i8 i16 i32 i64 isize u8 u16 u32 u u64 usize f32 f64 dec64 Option Result Bool void Self
+syntax keyword coneDataType i8 i16 i32 i64 isize u8 u16 u32 u64 usize f32 f64 dec64 Option Result Bool void Self
 " syntax keyword coneDataTypeC contained i8 i16 i32 i64 isize u8 u16 u32 u64 usize f32 f64 dec64 Option Result Bool void
 
 syntax keyword coneTrust trust
@@ -70,7 +70,7 @@ syntax match coneFunction "\(\<\(fn\|macro\)\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\3
 " syntax match coneTypeSuffix "\d.*\>" contains=coneDataTypeC
  
 " So my solution is to match a list of words :
-syntax match coneTypeSuffix "\(\d\)\@<=\zs\(i8\|i16\|i32\|i64\|isize\|u8\|u16\|u32\|u\|u64\|usize\|f32\|f\|f64\|d\|dec64\)\ze"
+syntax match coneTypeSuffix "\(\d\)\@<=\zs\(i8\|i16\|i32\|i64\|isize\|u8\|u16\|u32\|u64\|usize\|f32\|f64\|dec64\|f\|d\|u\)\ze"
 
 syntax match coneTagNote "@\<\w\+\>" display
 
