@@ -43,18 +43,23 @@ syntax region coneR3String start=/\vr"""/ skip=/\v\\./ end=/\v"""/
 syntax match coneCallFunction "\(`\?\)\zs\<\S\{-}\>\ze\1\s*("
 " syntax match coneCallFunction "\<\S\{-}\>\ze\s*("
 
-" Detect when we call a with the convention that a macro has an upper-case
-" first letter
-syntax match coneCallMacro "\<\u\S\{-}\>\ze\s*("
+"syntax match coneConstant "\v<[A-Z0-9,_]+\ze" display
 
 " It turns out that we can't match AFTER a keyword with \zs \ze syntax, so
 " this fails :
 " syntax match coneFunction "\<fn\>\s*\zs\<\S\{-}\>\ze\s*("
-" The solution, after spending quite some time understqnding the problem, is
+" The solution, after spending quite some time understanding the problem, is
 " there :
 " see https://vi.stackexchange.com/questions/20747/vim-syntax-match-changes-based-on-function-type-name-keyword
 " Which gives this for me (compare to above) :
-syntax match coneFunction "\(\<\(fn\|macro\)\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\3\s*[(\[]"
+syntax match coneFunction "\(\<fn\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*("
+
+" Another version where I detect both fn and macro to colors them both same
+" syntax match coneFunction "\(\<\(fn\|macro\)\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\3\s*[(\[]"
+
+syntax match coneDefMacro "\(\<macro\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*\["
+
+syntax match coneDefStruct "\(\<struct\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*[:\{]"
 
 
 "syntax match coneTypeSuffix "\d\zs[df]\ze"
@@ -122,13 +127,21 @@ syntax match coneDoz "\<0[zZ][0-9a-bA-B]\+\>" display
 syntax match coneOct "\<0[oO][0-7]\+\>" display
 syntax match coneBin "\<0[bB][01]\+\>" display
 
-syntax match coneConstant "\v<[A-Z0-9,_]+\ze" display
 syntax match coneMeta "\v\#<[A-Z0-9,_]+\ze" display
 
 syntax match coneAddressOf "&" display
 syntax match coneDeref "\*" display
 
-syntax match coneMacro "\<macro\>\s*\zs\<\w\{-}\>\ze\s*\[" display
+"syntax match coneDefMacro "\<macro\>\s*\zs\<\w\{-}\>\ze\s*\[" display
+" Detect when we call a macro with the convention that a macro has an upper-case
+" first letter
+syntax match coneCallMacro "\<\u\S\{-}\>\ze\s*("
+
+syntax match coneCallStruct "\<\u\S\{-}\>\ze\s*\["
+
+"syntax match coneCallStruct "^\s*\([^\(macro\)]\)\@<=.\{-}\zs\<\u\S\{-}\>\ze\s*\["
+
+
 
 syntax match coneCommentNote "@\<\w\+\>" contained display
 syntax region coneLineComment start=/\/\// end=/$/  contains=coneCommentNote, coneTodo, coneNote, coneXXX, coneFixMe, coneNoCheckin, coneHack
@@ -185,7 +198,6 @@ highlight link coneInclude Keyword
 highlight link coneImport Keyword
 highlight link coneExtern Keyword
 highlight link coneSet Keyword
-highlight link coneMacro Keyword
 highlight link coneFn Keyword
 highlight link coneTypeDef Keyword
 highlight link coneTrait Keyword
@@ -249,15 +261,20 @@ highlight link coneAssign Operator
 highlight link coneTernaryQMark Operator
 highlight link coneAppendOp Operator
 
-highlight link coneStruct Structure
+highlight link coneStruct Keyword
 highlight link coneEnum Structure
 highlight link coneUnion Structure
 highlight link coneBitField Structure
 highlight link coneBitSet Structure
 
+highlight link coneMacro Keyword
+
 highlight link coneFunction Function
 
-highlight link coneMacro Macro
+highlight link coneDefMacro Macro
+
+highlight link coneDefStruct Type
+
 highlight link coneIf Conditional
 highlight link coneWhen Conditional
 highlight link coneElse Conditional
@@ -296,7 +313,10 @@ highlight link coneDoz Number
 """ OPTIONS : uncomment these highlighting possibilities as desired
 """
 
-""  Calling a macro will me highlighted if you use the convention of defining a Macro with an uppercase first letter
+""  Calling a macro will be highlighted if you use the convention of defining a Struct with an uppercase first letter
+highlight link coneCallStruct Structure
+
+""  Calling a macro will be highlighted if you use the convention of defining a Macro with an uppercase first letter
 highlight link coneCallMacro Macro
 
 ""  Calling a function will be highlighted
