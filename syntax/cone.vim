@@ -14,11 +14,13 @@ syntax match coneHack "HACK"
 syntax keyword coneDataType i8 i16 i32 i64 isize u8 u16 u32 u64 usize f32 f64 dec64 Option Result Bool void Self
 " syntax keyword coneDataTypeC contained i8 i16 i32 i64 isize u8 u16 u32 u64 usize f32 f64 dec64 Option Result Bool void
 
+syntax match coneUserType "\<\u\U.\{-}\>"
+
 syntax keyword coneTrust trust
 
 syntax keyword conePerm uni mut imm const opaq
 syntax keyword coneBool true false
-syntax keyword coneNull nil
+syntax keyword coneNull Null
 syntax keyword coneVoid void
 
 syntax match backTick "`"
@@ -42,8 +44,6 @@ syntax region coneR3String start=/\vr"""/ skip=/\v\\./ end=/\v"""/
 " Detect when we call a function
 syntax match coneCallFunction "\(`\?\)\zs\<\S\{-}\>\ze\1\s*("
 " syntax match coneCallFunction "\<\S\{-}\>\ze\s*("
-
-syntax match coneConstant "\v<[A-Z0-9,_]+\ze" display
 
 " It turns out that we can't match AFTER a keyword with \zs \ze syntax, so
 " this fails :
@@ -117,7 +117,7 @@ syntax match coneOperator "\v\>\="
 
 syntax match coneInteger "\-\?\<\d\+" display
 
-syntax match coneConstant "\v<[A-Z0-9,_]+\ze" display
+syntax match coneConstant "\v<[0-9,_]+\ze" display
 
 syntax match coneDefMacro "\(\<macro\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*\["
 
@@ -297,6 +297,7 @@ highlight link coneHack Todo
 highlight link coneTagNote Identifier
 highlight link coneTypeSuffix Type
 highlight link coneDataType Type
+highlight link coneUserType Type
 highlight link conePerm WarningMsg
 highlight link coneTrust WarningMsg
 
