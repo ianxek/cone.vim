@@ -23,14 +23,14 @@ syntax keyword coneVoid void
 
 syntax match backTick "`"
 
-syntax match coneLibs "\(\<\(include\|import\)\>\s*\)\@<=\(\"\?\)\zs\<\S\{-}\>\ze\3\s*::"
+syntax match coneLibs "\(\<\(include\|import\)\>\s*\)\@<=\(\"\?\)\zs\<\S\{-}\>\ze\3"
 syntax match coneAlias "\(\<as\>\s*\)\@<=\zs\<\S\{-}\>\ze"
 
 " This matches all the names imported from a module if any
 " in combination with "contains", "matchgroup" allows to exclude the pattern notConeName
 " so that ::, commas, and "as" are not highlighted
 syntax match notConeName "\(,\|::\|as\)" contained
-syntax region coneName matchgroup=notConeNameLit start="\(^\s*import.\{-}::\)\@<=" matchgroup=Keyword end="as" contains=notConeName
+syntax region coneName matchgroup=notConeNameLit start="\(^\s*import.\{-}::\)\@<=" end="$" matchgroup=Keyword end="as" contains=notConeName
 
 syntax region coneChar start=/\v'/ skip=/\v\\./ end=/\v'/
 syntax region coneString start=/\v"/ skip=/\v\\./ end=/\v"/ contains=coneLibs
@@ -56,11 +56,6 @@ syntax match coneFunction "\(\<fn\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*("
 
 " Another version where I detect both fn and macro to colors them both same
 " syntax match coneFunction "\(\<\(fn\|macro\)\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\3\s*[(\[]"
-
-syntax match coneDefMacro "\(\<macro\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*\["
-
-syntax match coneDefStruct "\(\<struct\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*[:\{]"
-
 
 "syntax match coneTypeSuffix "\d\zs[df]\ze"
 " Same thing here, we avoid colliding with other matches by using @<=, here
@@ -123,6 +118,11 @@ syntax match coneOperator "\v\>\="
 syntax match coneInteger "\-\?\<\d\+" display
 
 syntax match coneConstant "\v<[A-Z0-9,_]+\ze" display
+
+syntax match coneDefMacro "\(\<macro\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*\["
+
+syntax match coneDefStruct "\(\<struct\>\s*\)\@<=\(`\?\)\zs\<\S\{-}\>\ze\2\s*[:\{]"
+
 
 syntax match coneFloat "\-\?\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\%([eE][+-]\=[0-9_]\+\)\=" display
 syntax match coneHex "\<0[xX][0-9A-Fa-f]\+\>" display
