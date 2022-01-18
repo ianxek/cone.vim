@@ -30,7 +30,7 @@ syntax match coneAlias "\(\<as\>\s*\)\@<=\zs\<\S\{-}\>\ze"
 " in combination with "contains", "matchgroup" allows to exclude the pattern notConeName
 " so that ::, commas, and "as" are not highlighted
 syntax match notConeName "\(,\|::\|as\)" contained
-syntax region coneName matchgroup=notConeNameLit start="\(::\)\@<=" end="as" contains=notConeName
+syntax region coneName matchgroup=notConeNameLit start="\(^\s*import.\{-}::\)\@<=" matchgroup=Keyword end="as" contains=notConeName
 
 syntax region coneChar start=/\v'/ skip=/\v\\./ end=/\v'/
 syntax region coneString start=/\v"/ skip=/\v\\./ end=/\v"/ contains=coneLibs
@@ -43,7 +43,7 @@ syntax region coneR3String start=/\vr"""/ skip=/\v\\./ end=/\v"""/
 syntax match coneCallFunction "\(`\?\)\zs\<\S\{-}\>\ze\1\s*("
 " syntax match coneCallFunction "\<\S\{-}\>\ze\s*("
 
-"syntax match coneConstant "\v<[A-Z0-9,_]+\ze" display
+syntax match coneConstant "\v<[A-Z0-9,_]+\ze" display
 
 " It turns out that we can't match AFTER a keyword with \zs \ze syntax, so
 " this fails :
@@ -121,6 +121,9 @@ syntax match coneOperator "\v\>\="
 
 
 syntax match coneInteger "\-\?\<\d\+" display
+
+syntax match coneConstant "\v<[A-Z0-9,_]+\ze" display
+
 syntax match coneFloat "\-\?\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\%([eE][+-]\=[0-9_]\+\)\=" display
 syntax match coneHex "\<0[xX][0-9A-Fa-f]\+\>" display
 syntax match coneDoz "\<0[zZ][0-9a-bA-B]\+\>" display
